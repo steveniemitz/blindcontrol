@@ -44,6 +44,9 @@ cmake-build-*/
 # IntelliJ
 out/
 
+.tox/
+*.egg-info/
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
