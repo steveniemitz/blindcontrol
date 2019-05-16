@@ -1,16 +1,23 @@
 import dataclasses
-from google.cloud.datastore import (Client, Entity)
-from .models import (OAuth2AuthorizationCode, OAuth2Token, Session, User, OAuth2RefreshToken)
-from . import crypto
 import time
+
+from google.cloud.datastore import Client, Entity
+
 from config import CONFIG
 
+from . import crypto
+from .models import (OAuth2AuthorizationCode, OAuth2RefreshToken, OAuth2Token,
+                     Session, User)
+
 _CLIENT = None
+
+
 def CLIENT():
   global _CLIENT
   if _CLIENT is None:
     _CLIENT = Client(project=CONFIG['project'])
   return _CLIENT
+
 
 class AuthCodeRepo:
   KIND = 'AuthCode'
@@ -33,6 +40,7 @@ class AuthCodeRepo:
     code_key = CLIENT().key(cls.KIND, code)
     CLIENT().delete(code_key)
 
+
 class TokenRepo:
   KIND = 'GrantToken'
   REFRESH_KIND = 'RefreshToken'
@@ -41,12 +49,11 @@ class TokenRepo:
   def put_token(cls, token, request):
     key = CLIENT().key(cls.KIND, token['access_token'])
     token_obj = OAuth2Token(
-      token_type=token['token_type'],
-      access_token=token['access_token'],
-      scope=token['scope'],
-      expires_at=token['expires_in'] + int(time.time()),
-      user_id=request.user.username
-    )
+        token_type=token['token_type'],
+        access_token=token['access_token'],
+        scope=token['scope'],
+        expires_at=token['expires_in'] + int(time.time()),
+        user_id=request.user.username)
     ent = Entity(key)
     ent.update(dataclasses.asdict(token_obj))
     CLIENT().put(ent)
@@ -96,16 +103,19 @@ class UserRepo:
     ent = Entity(key)
     user_dct = dataclasses.asdict(user)
     user_dct.pop('password')
-    user_dct['encrypted_password'] = crypto.PASSWORD.encrypt(user.password.encode('utf-8'))
+    user_dct['encrypted_password'] = crypto.PASSWORD.encrypt(
+        user.password.encode('utf-8'))
     ent.update(user_dct)
     CLIENT().put(ent)
+
 
 class SessionRepo:
   KIND = 'Session'
 
   @classmethod
   def put_session(cls, username):
-    return Session(crypto.SESSION.encrypt(username.encode('utf-8')), username, 0)
+    return Session(
+        crypto.SESSION.encrypt(username.encode('utf-8')), username, 0)
 
   @classmethod
   def get_session(cls, session_id):

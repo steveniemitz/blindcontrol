@@ -1,20 +1,24 @@
+import struct
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import List
-import struct
-from binary_writer import BinaryWriter
+
 from binary_reader import BinaryReader
-from frame_constants import DataKey, DataKeyType, DATAKEYS_BY_ID
+from binary_writer import BinaryWriter
+from frame_constants import DATAKEYS_BY_ID, DataKey, DataKeyType
+
 
 class MotoCmd(Enum):
   UP = 16
   DOWN = 18
   PERCENT_RUNING_LIGHT_DIMMER = 25
 
+
 @dataclass
 class FrameData:
   key: DataKey
   value: any
+
 
 @dataclass
 class Header:
@@ -22,12 +26,14 @@ class Header:
   cmd: int
   action: int
 
+
 @dataclass
 class CommandFrame:
   header: Header
   frame_type: int
   seq_num: int = 0
   data: List[FrameData] = field(default_factory=list)
+
 
 class FrameType:
   ROOM_LIST_REQ = 256
@@ -39,9 +45,11 @@ class FrameType:
   DEVICE_PARA_RESP = 299
   DEVICE_RSSI_REQ = 300
 
+
 class FrameDecoder:
+
   def _decode_header(self, reader):
-    reader.get_int() # version number?
+    reader.get_int()  # version number?
     total_len = reader.get_varint()
     flag = reader.get()
     cmd = reader.get_short()
@@ -98,11 +106,8 @@ class FrameDecoder:
     if total_len > 0:
       frame_type, seq_num, data = self._decode_body(reader)
     return CommandFrame(
-      header=header,
-      frame_type=frame_type,
-      seq_num=seq_num,
-      data=data
-    )
+        header=header, frame_type=frame_type, seq_num=seq_num, data=data)
+
 
 class FrameEncoder:
   _FRAME_START = bytes([83, 109, 97, 114, 116, 95, 73, 100, 49, 95, 121, 58])
@@ -160,6 +165,7 @@ class FrameEncoder:
     body = self._encode_body(frame)
     header = self._encode_header(frame, len(body))
     return header + body
+
 
 DEFAULT_ENCODER = FrameEncoder()
 DEFAULT_DECODER = FrameDecoder()

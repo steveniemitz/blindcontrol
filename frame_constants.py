@@ -1,5 +1,6 @@
-from enum import Enum
 from dataclasses import dataclass
+from enum import Enum
+
 
 class DataKeyType(Enum):
   STRING = 1
@@ -8,6 +9,7 @@ class DataKeyType(Enum):
   UINT8 = 4
   UINT16 = 5
   UINT32 = 6
+
 
 @dataclass
 class DataKey:
@@ -44,7 +46,8 @@ class DataKeys(Enum):
   DEVICE_CHANNEL = DataKey(265, "DEVICE_CHANNEL", DataKeyType.UINT8)
   DEVICE_ATTR = DataKey(268, "DEVICE_ATTR", DataKeyType.BYTE)
   EMITTER_KEY_NUMBER = DataKey(272, "EMITTER_KEY_NUMBER", DataKeyType.UINT8)
-  TRANSVERTER_CHANNEL_NUMBER = DataKey(273, "TRANSVERTER_CHANNEL_NUMBER", DataKeyType.UINT8)
+  TRANSVERTER_CHANNEL_NUMBER = DataKey(273, "TRANSVERTER_CHANNEL_NUMBER",
+                                       DataKeyType.UINT8)
   ROOM_ID = DataKey(512, "ROOM_ID", DataKeyType.BYTES)
   SCENE_ID = DataKey(528, "SCENE_ID", DataKeyType.BYTES)
   SCENE_EXECUTE_MODE = DataKey(529, "SCENE_EXECUTE_MODE", DataKeyType.UINT8)
@@ -59,15 +62,19 @@ class DataKeys(Enum):
   HOUR = DataKey(571, "HOUR", DataKeyType.BYTE)
   MINUTE = DataKey(572, "MINUTE", DataKeyType.BYTE)
   TIMER_CMD_TYPE = DataKey(573, "TIMER_CMD_TYPE", DataKeyType.UINT8)
-  INNER_PARA_BYTES_COUNT = DataKey(577, "INNER_PARA_BYTES_COUNT", DataKeyType.BYTE)
+  INNER_PARA_BYTES_COUNT = DataKey(577, "INNER_PARA_BYTES_COUNT",
+                                   DataKeyType.BYTE)
   PARA_START_ADDR = DataKey(578, "PARA_START_ADDR", DataKeyType.UINT8)
   INNER_PARA_DATA = DataKey(579, "INNER_PARA_DATA", DataKeyType.BYTES)
   USER_AUTHORITY = DataKey(592, "USER_AUTHORITY", DataKeyType.UINT8)
   SCENE_ATTR = DataKey(593, "SCENE_ATTR", DataKeyType.UINT8)
   HUB_CHECK_CODE = DataKey(594, "HUB_CHECK_CODE", DataKeyType.UINT16)
-  MCU_SOFTWARE_VERSION = DataKey(595, "MCU_SOFTWARE_VERSION", DataKeyType.STRING)
-  WIFI_SOFTWARE_VERSION = DataKey(596, "WIFI_SOFTWARE_VERSION", DataKeyType.STRING)
-  WIFI_HARDWARE_VERSION = DataKey(597, "WIFI_HARDWARE_VERSION", DataKeyType.STRING)
+  MCU_SOFTWARE_VERSION = DataKey(595, "MCU_SOFTWARE_VERSION",
+                                 DataKeyType.STRING)
+  WIFI_SOFTWARE_VERSION = DataKey(596, "WIFI_SOFTWARE_VERSION",
+                                  DataKeyType.STRING)
+  WIFI_HARDWARE_VERSION = DataKey(597, "WIFI_HARDWARE_VERSION",
+                                  DataKeyType.STRING)
   WIFI_MAC_ADDR = DataKey(598, "WIFI_MAC_ADDR", DataKeyType.BYTES)
   WIFI_IP = DataKey(599, "WIFI_IP", DataKeyType.STRING)
   WIFI_SECRET_KEY = DataKey(608, "WIFI_SECRET_KEY", DataKeyType.UINT8)
@@ -76,6 +83,7 @@ class DataKeys(Enum):
   RS485_MAC = DataKey(632, "RS485_MAC", DataKeyType.BYTES)
   ERROR = DataKey(768, "ERROR", DataKeyType.UINT16)
 
+
 DATAKEYS_BY_ID = {
-  dk.value.key_id: dk.value for (_, dk) in DataKeys.__members__.items()
+    dk.value.key_id: dk.value for (_, dk) in DataKeys.__members__.items()
 }

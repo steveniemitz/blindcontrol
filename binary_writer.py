@@ -1,6 +1,8 @@
 import struct
 
+
 class BinaryWriter:
+
   def __init__(self, strm: bytearray, order='>'):
     self._strm = strm
     self._pos = 0

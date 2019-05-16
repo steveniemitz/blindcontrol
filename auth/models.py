@@ -1,7 +1,9 @@
-from dataclasses import dataclass, field
-from authlib.oauth2.rfc6749.models import ClientMixin, TokenMixin
-from typing import List
 import time
+from dataclasses import dataclass, field
+from typing import List
+
+from authlib.oauth2.rfc6749.models import ClientMixin, TokenMixin
+
 
 @dataclass
 class User:
@@ -11,11 +13,13 @@ class User:
   gizUid: str = None
   gizExpireAt: int = -1
 
+
 @dataclass
 class Session:
   session_id: str
   user_id: str
   expires_at: int
+
 
 @dataclass
 class OAuth2Client(ClientMixin):
@@ -84,6 +88,7 @@ class OAuth2AuthorizationCode:
   def get_auth_time(self):
     return self.auth_time
 
+
 @dataclass
 class OAuth2Token(TokenMixin):
   access_token: str
@@ -103,6 +108,7 @@ class OAuth2Token(TokenMixin):
 
   def is_expired(self):
     return self.get_expires_in() < 0
+
 
 @dataclass
 class OAuth2RefreshToken:

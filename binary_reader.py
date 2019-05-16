@@ -1,7 +1,9 @@
 import struct
 
+
 class BinaryReader:
-  def __init__(self, data: bytes, order: str='>'):
+
+  def __init__(self, data: bytes, order: str = '>'):
     self._d = data
     self._pos = 0
     self._order = order
