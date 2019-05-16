@@ -1,0 +1,31 @@
+{
+  "project": "{example}",
+  "keys": {
+    "session_key": {
+      "path": "projects/{example}/locations/global/keyRings/oauth-keys/cryptoKeys/session-key",
+      "material": "{example}"
+    },
+    "password_key": {
+      "path": "projects/{example}/locations/global/keyRings/oauth-keys/cryptoKeys/password-key",
+      "material": "{example}"
+    }
+  },
+  "oauth_clients": {
+    "google-home": {
+      "client_secret": "{example}",
+      "allowed_urls": [
+        "https://oauth-redirect.googleusercontent.com/r/{example}",
+        "urn:ietf:wg:oauth:2.0:oob"
+      ]
+    },
+    "alexa-smarthome": {
+      "client_secret": "{example}",
+      "allowed_urls": [
+        "https://alexa.amazon.co.jp/api/skill/link/{example}",
+        "https://layla.amazon.com/api/skill/link/{example}",
+        "https://pitangui.amazon.com/api/skill/link/{example}"
+      ]
+    }
+  },
+  "appid": "{example}"
+}

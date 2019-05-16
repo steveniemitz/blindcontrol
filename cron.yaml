@@ -1,0 +1,4 @@
+cron:
+- description: "keep-alive"
+  url: /ping
+  schedule: every 5 minutes
